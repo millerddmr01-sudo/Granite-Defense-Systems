@@ -1,13 +1,78 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { createOrder } from "@/app/actions/checkout"; // We'll create this next
+import { createOrder } from "@/app/actions/checkout";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
-export default function CheckoutPage() {
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
+const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
+
+export default function CheckoutPageWrapper() {
+    const { items, subtotal } = useCart();
+    const [clientSecret, setClientSecret] = useState<string>("");
+    const [paymentIntentId, setPaymentIntentId] = useState<string>("");
+
+    useEffect(() => {
+        if (subtotal > 0) {
+            fetch("/api/create-payment-intent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    amount: subtotal,
+                }),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    setClientSecret(data.clientSecret);
+                    setPaymentIntentId(data.paymentIntentId);
+                })
+                .catch(err => {
+                    console.error("Failed to fetch payment intent:", err);
+                });
+        }
+    }, [subtotal]);
+
+    if (items.length === 0) {
+        return <CheckoutPage paymentIntentId={null} />;
+    }
+
+    if (!clientSecret && subtotal > 0) {
+        return (
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
+
+    if (!stripePromise && subtotal > 0) {
+        return (
+            <div className="container mx-auto p-12 text-center text-red-500 font-bold min-h-screen">
+                Stripe Configuration Error: Missing Publishable Key. Please check your environment variables (.env.local).
+            </div>
+        );
+    }
+
+    const options = {
+        clientSecret,
+        appearance: {
+            theme: 'stripe' as const,
+        },
+    };
+
+    return (
+        <Elements key={clientSecret} options={options} stripe={stripePromise!}>
+            <CheckoutPage paymentIntentId={paymentIntentId} />
+        </Elements>
+    );
+}
+
+function CheckoutPage({ paymentIntentId }: { paymentIntentId: string | null }) {
     const { items, subtotal, clearCart } = useCart();
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
@@ -22,17 +87,18 @@ export default function CheckoutPage() {
         notes: ''
     });
 
+    const stripe = useStripe();
+    const elements = useElements();
+
     useEffect(() => {
         // Pre-fill user data if logged in
         const fetchUser = async () => {
             const supabase = createClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (user) {
-                // Here we could fetch profile data if we had a profiles table with address info
                 setFormData(prev => ({
                     ...prev,
                     email: user.email || '',
-                    // fullName: user.user_metadata?.full_name || '' 
                 }));
             }
         };
@@ -45,6 +111,12 @@ export default function CheckoutPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!stripe || !elements) {
+            // Stripe is not yet loaded
+            return;
+        }
+
         setStatus('loading');
         setErrorMessage('');
 
@@ -53,19 +125,50 @@ export default function CheckoutPage() {
                 throw new Error("Your cart is empty.");
             }
 
-            // Create order via server action
-            const result = await createOrder({
-                items,
-                customer: formData,
-                total: subtotal
+            // 1. Confirm Card Payment via Stripe
+            const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                redirect: 'if_required',
+                confirmParams: {
+                    payment_method_data: {
+                        billing_details: {
+                            name: formData.fullName,
+                            email: formData.email,
+                            phone: formData.phone,
+                            address: {
+                                line1: formData.address,
+                                city: formData.city,
+                                state: formData.state,
+                                postal_code: formData.zip,
+                                country: 'US',
+                            }
+                        }
+                    }
+                },
             });
 
-            if (!result.success) {
-                throw new Error(result.error || "Failed to place order.");
+            if (stripeError) {
+                setStatus('error');
+                setErrorMessage(stripeError.message || "Payment failed.");
+                return;
             }
 
-            clearCart();
-            setStatus('success');
+            // 2. If Payment succeeded, create the record in our DB
+            if (paymentIntent && paymentIntent.status === "succeeded") {
+                const result = await createOrder({
+                    items,
+                    customer: formData,
+                    total: subtotal
+                });
+
+                if (!result.success) {
+                    throw new Error(result.error || "Failed to save order record.");
+                }
+
+                clearCart();
+                setStatus('success');
+            }
+
         } catch (error) {
             console.error(error);
             setStatus('error');
@@ -94,9 +197,6 @@ export default function CheckoutPage() {
                     <p className="text-zinc-600 max-w-md mx-auto">
                         Thank you for your order, <span className="font-bold">{formData.fullName}</span>.
                         We have sent a confirmation email to <span className="font-bold">{formData.email}</span> with your order details.
-                    </p>
-                    <p className="text-zinc-500 mt-2 text-sm">
-                        One of our representatives will contact you shortly to finalize payment and shipping.
                     </p>
                 </div>
                 <Link href="/" className="px-8 py-3 bg-primary text-primary-foreground font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition-opacity">
@@ -203,6 +303,14 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
+                        {/* Payment Method Display */}
+                        <div className="pt-6 border-t border-border mt-6">
+                            <h3 className="text-xl font-bold uppercase mb-4">Payment Information</h3>
+                            <div className="p-4 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg">
+                                <PaymentElement id="payment-element" />
+                            </div>
+                        </div>
+
                         {errorMessage && (
                             <div className="p-4 bg-red-100 text-red-700 text-sm rounded-sm font-bold">
                                 {errorMessage}
@@ -211,13 +319,13 @@ export default function CheckoutPage() {
 
                         <button
                             type="submit"
-                            disabled={status === 'loading'}
+                            disabled={status === 'loading' || !stripe || !elements}
                             className="w-full py-4 bg-primary text-primary-foreground font-black uppercase tracking-widest text-lg rounded-sm hover:opacity-90 transition-opacity disabled:opacity-50"
                         >
-                            {status === 'loading' ? 'Processing...' : 'Submit Order Request'}
+                            {status === 'loading' ? 'Processing...' : 'Pay & Submit Order'}
                         </button>
                         <p className="text-xs text-secondary text-center">
-                            By clicking submit, you agree to our Terms of Service. Payment will be collected after order confirmation.
+                            By clicking submit, you agree to our Terms of Service. Payment is collected securely via Stripe.
                         </p>
                     </form>
                 </div>
