@@ -17,6 +17,7 @@ export default function CheckoutPageWrapper() {
     const { items, subtotal } = useCart();
     const [clientSecret, setClientSecret] = useState<string>("");
     const [paymentIntentId, setPaymentIntentId] = useState<string>("");
+    const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
         if (subtotal > 0) {
@@ -38,22 +39,44 @@ export default function CheckoutPageWrapper() {
         }
     }, [subtotal]);
 
-    if (items.length === 0) {
-        return <CheckoutPage paymentIntentId={null} />;
-    }
-
-    if (!clientSecret && subtotal > 0) {
+    if (isSuccess) {
         return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-6 p-4 text-center">
+                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div>
+                    <h1 className="text-4xl font-black uppercase mb-2">Order Received!</h1>
+                    <p className="text-zinc-600 max-w-md mx-auto">
+                        Thank you for your order! We have sent a confirmation email to your provided email address with your order details.
+                    </p>
+                </div>
+                <Link href="/" className="px-8 py-3 bg-primary text-primary-foreground font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition-opacity">
+                    Return Home
+                </Link>
             </div>
         );
     }
 
-    if (!stripePromise && subtotal > 0) {
+    if (items.length === 0) {
         return (
-            <div className="container mx-auto p-12 text-center text-red-500 font-bold min-h-screen">
-                Stripe Configuration Error: Missing Publishable Key. Please check your environment variables (.env.local).
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4 p-4">
+                <h1 className="text-3xl font-black uppercase text-secondary">Cart Empty</h1>
+                <p className="text-zinc-500">You have no items in your cart to checkout.</p>
+                <Link href="/shop" className="text-primary hover:underline font-bold">Return to Shop</Link>
+            </div>
+        );
+    }
+
+    if (!clientSecret || !stripePromise) {
+        return (
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                {!stripeKey && (
+                    <p className="mt-4 text-red-500 font-bold max-w-md text-center">
+                        Stripe Configuration Error: Missing Publishable Key. Please check your environment variables (.env.local).
+                    </p>
+                )}
             </div>
         );
     }
@@ -66,13 +89,13 @@ export default function CheckoutPageWrapper() {
     };
 
     return (
-        <Elements key={clientSecret} options={options} stripe={stripePromise!}>
-            <CheckoutPage paymentIntentId={paymentIntentId} />
+        <Elements key={clientSecret} options={options} stripe={stripePromise}>
+            <CheckoutPage paymentIntentId={paymentIntentId} onSuccess={() => setIsSuccess(true)} />
         </Elements>
     );
 }
 
-function CheckoutPage({ paymentIntentId }: { paymentIntentId: string | null }) {
+function CheckoutPage({ paymentIntentId, onSuccess }: { paymentIntentId: string | null, onSuccess: () => void }) {
     const { items, subtotal, clearCart } = useCart();
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
@@ -167,6 +190,7 @@ function CheckoutPage({ paymentIntentId }: { paymentIntentId: string | null }) {
 
                 clearCart();
                 setStatus('success');
+                onSuccess(); // Trigger wrapper to show success state
             }
 
         } catch (error) {
@@ -175,36 +199,6 @@ function CheckoutPage({ paymentIntentId }: { paymentIntentId: string | null }) {
             setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred.");
         }
     };
-
-    if (items.length === 0 && status !== 'success') {
-        return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4 p-4">
-                <h1 className="text-3xl font-black uppercase text-secondary">Cart Empty</h1>
-                <p className="text-zinc-500">You have no items in your cart to checkout.</p>
-                <Link href="/shop" className="text-primary hover:underline font-bold">Return to Shop</Link>
-            </div>
-        );
-    }
-
-    if (status === 'success') {
-        return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-6 p-4 text-center">
-                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
-                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <div>
-                    <h1 className="text-4xl font-black uppercase mb-2">Order Received!</h1>
-                    <p className="text-zinc-600 max-w-md mx-auto">
-                        Thank you for your order, <span className="font-bold">{formData.fullName}</span>.
-                        We have sent a confirmation email to <span className="font-bold">{formData.email}</span> with your order details.
-                    </p>
-                </div>
-                <Link href="/" className="px-8 py-3 bg-primary text-primary-foreground font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition-opacity">
-                    Return Home
-                </Link>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 py-12 px-4">
