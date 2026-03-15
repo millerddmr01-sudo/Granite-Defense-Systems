@@ -26,14 +26,6 @@ export default function FalconSeriesPage() {
                             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Build Days
                         </Link>
                     </div>
-                    <div className="relative w-48 h-48 mb-8">
-                        <Image
-                            src="/assets/Falcon_Fund_Logo.png"
-                            alt="The Falcon Series"
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
                     <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-6">The Falcon Series</h1>
                     <p className="text-xl text-gray-300 max-w-2xl font-light">
                         Built, Not Bought. A disciplined progression—a modern fighting armory assembled with intent, purpose, and mastery.
