@@ -8,16 +8,16 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
     const { id } = await params;
 
     const falconData: Record<string, { numeral: string, description: string, role: string }> = {
-        "i": { numeral: "I", role: "Foundation", description: "The starting point of the system. A reliable, general-purpose rifle built to master the fundamentals of marksmanship and manual of arms." },
-        "ii": { numeral: "II", role: "Close Quarters", description: "Optimized for speed and maneuverability. A shorter platform designed for tight spaces and rapid engagements within 100 yards." },
-        "iii": { numeral: "III", role: "Extended Range", description: "A precision-focused build pushing out beyond 500 yards. Featuring enhanced optics, heavier barrels, and refined trigger systems." },
-        "iv": { numeral: "IV", role: "Night Operations", description: "Dedicated night-vision setup. Integrated IR lasers, illuminators, and passive aiming solutions for complete capability after dark." },
-        "v": { numeral: "V", role: "The Generalist", description: "The do-all platform. A mid-length setup balancing weight, velocity, and maneuverability for maximum versatility in any environment." },
-        "vi": { numeral: "VI", role: "Suppressed Platform", description: "Built specifically to be run suppressed 100% of the time. Tuned gas systems and optimized buffer weights for a peerless shooting experience." },
-        "vii": { numeral: "VII", role: "Backpack & Mobility", description: "Extreme portability. A folding, breakdown, or ultra-compact setup designed to be discreetly carried and rapidly deployed." },
-        "viii": { numeral: "VIII", role: "Heavy Hitter", description: "Stepping up in caliber. A platform built for barrier penetration and maximum ballistic effect on target." },
-        "ix": { numeral: "IX", role: "The Lightweight", description: "Stripped of all excess. Ounces equal pounds, and this build is meticulously crafted to be carried all day without fatigue." },
-        "x": { numeral: "X", role: "The Capstone", description: "The supreme manifestation of the Falcon Series. A no-compromise, bespoke build that integrates every lesson learned from I through IX." },
+        "i": { numeral: "I", role: "The Threshold", description: "The starting point of the system. A reliable, general-purpose rifle built to master the fundamentals of marksmanship and manual of arms." },
+        "ii": { numeral: "II", role: "The Reach", description: "Optimized for speed and maneuverability. A shorter platform designed for tight spaces and rapid engagements within 100 yards." },
+        "iii": { numeral: "III", role: "The Duty Carbine", description: "A precision-focused build pushing out beyond 500 yards. Featuring enhanced optics, heavier barrels, and refined trigger systems." },
+        "iv": { numeral: "IV", role: "The Generalist", description: "Dedicated night-vision setup. Integrated IR lasers, illuminators, and passive aiming solutions for complete capability after dark." },
+        "v": { numeral: "V", role: "The Shadow", description: "The do-all platform. A mid-length setup balancing weight, velocity, and maneuverability for maximum versatility in any environment." },
+        "vi": { numeral: "VI", role: "The Sidearm", description: "Built specifically to be run suppressed 100% of the time. Tuned gas systems and optimized buffer weights for a peerless shooting experience." },
+        "vii": { numeral: "VII", role: "The Precision Rifle", description: "Extreme portability. A folding, breakdown, or ultra-compact setup designed to be discreetly carried and rapidly deployed." },
+        "viii": { numeral: "VIII", role: "The Breacher", description: "Stepping up in caliber. A platform built for barrier penetration and maximum ballistic effect on target." },
+        "ix": { numeral: "IX", role: "The Sentinel", description: "Stripped of all excess. Ounces equal pounds, and this build is meticulously crafted to be carried all day without fatigue." },
+        "x": { numeral: "X", role: "The Interceptor", description: "The supreme manifestation of the Falcon Series. A no-compromise, bespoke build that integrates every lesson learned from I through IX." },
     };
 
     const data = falconData[id.toLowerCase()];

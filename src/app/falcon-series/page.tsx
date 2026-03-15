@@ -4,16 +4,16 @@ import { ArrowLeft } from "lucide-react";
 
 export default function FalconSeriesPage() {
     const panels = [
-        { id: "i", numeral: "I" },
-        { id: "ii", numeral: "II" },
-        { id: "iii", numeral: "III" },
-        { id: "iv", numeral: "IV" },
-        { id: "v", numeral: "V" },
-        { id: "vi", numeral: "VI" },
-        { id: "vii", numeral: "VII" },
-        { id: "viii", numeral: "VIII" },
-        { id: "ix", numeral: "IX" },
-        { id: "x", numeral: "X" }
+        { id: "i", numeral: "I", title: "The Threshold" },
+        { id: "ii", numeral: "II", title: "The Reach" },
+        { id: "iii", numeral: "III", title: "The Duty Carbine" },
+        { id: "iv", numeral: "IV", title: "The Generalist" },
+        { id: "v", numeral: "V", title: "The Shadow" },
+        { id: "vi", numeral: "VI", title: "The Sidearm" },
+        { id: "vii", numeral: "VII", title: "The Precision Rifle" },
+        { id: "viii", numeral: "VIII", title: "The Breacher" },
+        { id: "ix", numeral: "IX", title: "The Sentinel" },
+        { id: "x", numeral: "X", title: "The Interceptor" }
     ];
 
     return (
@@ -40,7 +40,7 @@ export default function FalconSeriesPage() {
                         <Link href={`/falcon-series/${panel.id}`} key={panel.id} className="group cursor-pointer">
                             <div className="bg-zinc-50 border border-zinc-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1">
                                 <div className="p-8 pb-4 flex flex-col items-center text-center grow">
-                                    <div className="relative w-32 h-32 group-hover:scale-105 transition-transform duration-300">
+                                    <div className="relative w-32 h-32 mb-4 group-hover:scale-105 transition-transform duration-300">
                                         <Image
                                             src={`/assets/falcon/Falcon_${panel.numeral}_Logo.png`}
                                             alt={`Falcon ${panel.numeral}`}
@@ -48,6 +48,9 @@ export default function FalconSeriesPage() {
                                             className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
                                         />
                                     </div>
+                                    <h2 className="text-lg font-bold uppercase text-zinc-900 tracking-wider">
+                                        {panel.title}
+                                    </h2>
                                 </div>
                                 <div className="bg-zinc-100 items-center justify-center p-4 border-t border-zinc-200 text-sm font-bold uppercase tracking-widest text-zinc-500 group-hover:bg-zinc-900 group-hover:text-white transition-colors flex">
                                     View Intel
