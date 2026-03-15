@@ -37,6 +37,10 @@ export async function updateSession(request: NextRequest) {
 }
 
 export function middleware(request: NextRequest) {
+    // Guard: if Supabase env vars are not configured, pass through cleanly
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        return NextResponse.next()
+    }
     return updateSession(request)
 }
 
