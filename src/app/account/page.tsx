@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
 export default async function AccountPage() {
     const supabase = await createClient();
@@ -78,7 +77,7 @@ export default async function AccountPage() {
 
                         {!orders || orders.length === 0 ? (
                             <div className="text-center py-16 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg">
-                                <p className="text-secondary font-medium">You haven't placed any orders yet.</p>
+                                <p className="text-secondary font-medium">You haven&apos;t placed any orders yet.</p>
                                 <Link href="/shop" className="mt-4 inline-block text-primary font-bold hover:underline">
                                     Start Shopping
                                 </Link>
