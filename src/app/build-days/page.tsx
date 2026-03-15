@@ -85,7 +85,16 @@ export default function BuildDaysPage() {
                                 {cls.description}
                             </p>
                         </div>
-                        {cls.image && (
+                        {cls.title === "The Falcon Series" ? (
+                            <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex justify-center">
+                                <Link
+                                    href="/falcon-series"
+                                    className="inline-flex items-center gap-2 px-6 py-2 border-2 border-foreground text-foreground font-bold uppercase tracking-wide hover:bg-foreground hover:text-background transition-colors rounded-sm"
+                                >
+                                    The Falcon Series
+                                </Link>
+                            </div>
+                        ) : cls.image && (
                             <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex justify-center">
                                 <button
                                     onClick={() => setSelectedImage({ src: cls.image as string, alt: cls.title })}
