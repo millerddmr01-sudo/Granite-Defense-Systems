@@ -108,7 +108,7 @@ export default function BuildOptions({ options, modelName }: { options: OptionsP
                     href={`/contact?${inquiryParams.toString()}`} 
                     className="inline-block bg-zinc-900 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg w-full sm:w-auto text-center"
                 >
-                    Inquire About Build
+                    Add to Cart
                 </Link>
             </div>
         </div>

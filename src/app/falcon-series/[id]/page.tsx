@@ -117,7 +117,7 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
                         {!data.options && (
                             <div className="pt-6">
                                 <Link href="/contact" className="inline-block bg-zinc-900 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg w-full sm:w-auto text-center">
-                                    Inquire About Build
+                                    Add to Cart
                                 </Link>
                             </div>
                         )}
