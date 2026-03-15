@@ -2,15 +2,35 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
+import BuildOptions from "./BuildOptions";
 
 // Adding Next.js 15+ correct handling of params as a Promise
 export default async function FalconDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
 
-    const falconData: Record<string, { numeral: string, title: string, platform: string, caliber: string, mission: string, whySeries: string, buildDetails: string }> = {
+    const falconData: Record<string, { numeral: string, title: string, platform: string, caliber: string, mission: string, whySeries: string, buildDetails: string, options?: any }> = {
         "i": { numeral: "I", title: "The Threshold", platform: "AR-9", caliber: "9×19mm", mission: "CQB fundamentals\nRepetition & muscle memory\nHigh-volume drills\nCost-efficient sustainment training", whySeries: "The Falcon I is the entry weapon to the Falcon Series. It allows operators to train AR manual-of-arms at high tempo without the cost or wear of rifle calibers. Same controls. Same feel. Maximum reps. Every serious armory starts with a trainer.", buildDetails: "Effective Range: 0–100 yards (optimized for CQB)" },
         "ii": { numeral: "II", title: "The Reach", platform: "AR-10", caliber: "6.5 Creedmoor", mission: "Long-range interdiction\nPrecision overwatch\nCounter-sniper capability\nOpen-terrain dominance", whySeries: "No modern fighting armory is complete without true standoff capability. The Falcon II extends the Falcon operator’s reach well beyond standard infantry distance, delivering precision, ballistic efficiency, and authority at range.", buildDetails: "Effective Range: 100–1,000 yards+" },
-        "iii": { numeral: "III", title: "The Duty Carbine", platform: "MK18-inspired Carbine", caliber: "5.56×45", mission: "Primary fighting rifle\nCQB / urban operations\nVehicle deployment\nRapid target transition", whySeries: "The Falcon III is the workhorse. Proven. Compact. Indestructible. This is the rifle you grab when everything goes sideways. Modeled after one of the most battle-tested carbines in modern Special Operations history.", buildDetails: "Effective Range: 0–300 yards" },
+        "iii": { 
+            numeral: "III", 
+            title: "The Duty Carbine", 
+            platform: "MK18-inspired Carbine", 
+            caliber: "5.56×45", 
+            mission: "Primary fighting rifle\nCQB / urban operations\nVehicle deployment\nRapid target transition", 
+            whySeries: "The Falcon III is the workhorse. Proven. Compact. Indestructible. This is the rifle you grab when everything goes sideways. Modeled after one of the most battle-tested carbines in modern Special Operations history.\n\nEffective Range: 0–300 yards", 
+            buildDetails: "",
+            options: {
+                silencer: [
+                    { label: "$2,975 w/o silencer", value: "none", price: 2975 },
+                    { label: "$3,925 w/ Huxwrx Ventum 762 (includes HUB Mount)", value: "huxwrx_ventum_762", price: 3925 }
+                ],
+                components: [
+                    { name: "Handguard", choices: ["Black", "FDE"] },
+                    { name: "Buttstock", choices: ["Black", "FDE"] },
+                    { name: "Grip", choices: ["Black", "FDE"] }
+                ]
+            }
+        },
         "iv": { numeral: "IV", title: "The Generalist", platform: "AR-15 (16\")", caliber: "5.56×45", mission: "General Purpose Rifle (GPR)\nMid-range dominance\nMulti-optic flexibility\nRural / mixed-terrain ops", whySeries: "Where the Duty Carbine excels up close, the Falcon IV owns the middle ground. With dual-optic capability, it transitions seamlessly from CQB to distance. This is the do-everything rifle every serious armory needs.", buildDetails: "Effective Range: 0–600 yards" },
         "v": { numeral: "V", title: "The Shadow", platform: "AR-15", caliber: ".300 Blackout", mission: "Suppressed operations\nLow-signature engagements\nCQB with enhanced terminal effect\nNight operations", whySeries: "The Falcon V is built for discretion. Optimized for suppressed use, it delivers authority in close quarters while minimizing blast and signature. This is the rifle for working in the dark.", buildDetails: "Effective Range: 0–300 yards (mission-dependent)" },
         "vi": { numeral: "VI", title: "The Sidearm", platform: "Duty Pistol (Full Kit)", caliber: "9×19mm", mission: "Secondary weapon system\nClose-contact defense\nWeapon transition under stress\nLast-line survivability", whySeries: "A rifle may fail. A pistol is always there. Falcon VI is built as a true fighting sidearm, fully equipped with battle belt integration. This is not a range gun — it’s a lifeline.", buildDetails: "Effective Range: 0–50 yards" },
@@ -85,16 +105,22 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
 
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-3">Build Details</h3>
-                            <p className="text-lg text-zinc-700 leading-relaxed font-light bg-zinc-50 p-6 rounded-lg border border-zinc-100 whitespace-pre-line">
-                                {data.buildDetails}
-                            </p>
+                            {data.options ? (
+                                <BuildOptions options={data.options} modelName={`Falcon ${data.numeral} - ${data.title}`} />
+                            ) : (
+                                <p className="text-lg text-zinc-700 leading-relaxed font-light bg-zinc-50 p-6 rounded-lg border border-zinc-100 whitespace-pre-line">
+                                    {data.buildDetails}
+                                </p>
+                            )}
                         </div>
                         
-                        <div className="pt-6">
-                            <Link href="/contact" className="inline-block bg-zinc-900 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg w-full sm:w-auto text-center">
-                                Inquire About Build
-                            </Link>
-                        </div>
+                        {!data.options && (
+                            <div className="pt-6">
+                                <Link href="/contact" className="inline-block bg-zinc-900 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg w-full sm:w-auto text-center">
+                                    Inquire About Build
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
