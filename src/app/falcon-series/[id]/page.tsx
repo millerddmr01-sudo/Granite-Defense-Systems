@@ -8,16 +8,16 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
     const { id } = await params;
 
     const falconData: Record<string, { numeral: string, title: string, platform: string, caliber: string, mission: string, whySeries: string, buildDetails: string }> = {
-        "i": { numeral: "I", title: "The Threshold", platform: "TBA", caliber: "TBA", mission: "The starting point of the system. A reliable, general-purpose rifle built to master the fundamentals of marksmanship and manual of arms.", whySeries: "TBA", buildDetails: "TBA" },
-        "ii": { numeral: "II", title: "The Reach", platform: "TBA", caliber: "TBA", mission: "Optimized for speed and maneuverability. A shorter platform designed for tight spaces and rapid engagements within 100 yards.", whySeries: "TBA", buildDetails: "TBA" },
-        "iii": { numeral: "III", title: "The Duty Carbine", platform: "TBA", caliber: "TBA", mission: "A precision-focused build pushing out beyond 500 yards. Featuring enhanced optics, heavier barrels, and refined trigger systems.", whySeries: "TBA", buildDetails: "TBA" },
-        "iv": { numeral: "IV", title: "The Generalist", platform: "TBA", caliber: "TBA", mission: "Dedicated night-vision setup. Integrated IR lasers, illuminators, and passive aiming solutions for complete capability after dark.", whySeries: "TBA", buildDetails: "TBA" },
-        "v": { numeral: "V", title: "The Shadow", platform: "TBA", caliber: "TBA", mission: "The do-all platform. A mid-length setup balancing weight, velocity, and maneuverability for maximum versatility in any environment.", whySeries: "TBA", buildDetails: "TBA" },
-        "vi": { numeral: "VI", title: "The Sidearm", platform: "TBA", caliber: "TBA", mission: "Built specifically to be run suppressed 100% of the time. Tuned gas systems and optimized buffer weights for a peerless shooting experience.", whySeries: "TBA", buildDetails: "TBA" },
-        "vii": { numeral: "VII", title: "The Precision Rifle", platform: "TBA", caliber: "TBA", mission: "Extreme portability. A folding, breakdown, or ultra-compact setup designed to be discreetly carried and rapidly deployed.", whySeries: "TBA", buildDetails: "TBA" },
-        "viii": { numeral: "VIII", title: "The Breacher", platform: "TBA", caliber: "TBA", mission: "Stepping up in caliber. A platform built for barrier penetration and maximum ballistic effect on target.", whySeries: "TBA", buildDetails: "TBA" },
-        "ix": { numeral: "IX", title: "The Sentinel", platform: "TBA", caliber: "TBA", mission: "Stripped of all excess. Ounces equal pounds, and this build is meticulously crafted to be carried all day without fatigue.", whySeries: "TBA", buildDetails: "TBA" },
-        "x": { numeral: "X", title: "The Interceptor", platform: "TBA", caliber: "TBA", mission: "The supreme manifestation of the Falcon Series. A no-compromise, bespoke build that integrates every lesson learned from I through IX.", whySeries: "TBA", buildDetails: "TBA" },
+        "i": { numeral: "I", title: "The Threshold", platform: "AR-9", caliber: "9×19mm", mission: "CQB fundamentals\nRepetition & muscle memory\nHigh-volume drills\nCost-efficient sustainment training", whySeries: "The Falcon I is the entry weapon to the Falcon Series. It allows operators to train AR manual-of-arms at high tempo without the cost or wear of rifle calibers. Same controls. Same feel. Maximum reps. Every serious armory starts with a trainer.", buildDetails: "Effective Range: 0–100 yards (optimized for CQB)" },
+        "ii": { numeral: "II", title: "The Reach", platform: "AR-10", caliber: "6.5 Creedmoor", mission: "Long-range interdiction\nPrecision overwatch\nCounter-sniper capability\nOpen-terrain dominance", whySeries: "No modern fighting armory is complete without true standoff capability. The Falcon II extends the Falcon operator’s reach well beyond standard infantry distance, delivering precision, ballistic efficiency, and authority at range.", buildDetails: "Effective Range: 100–1,000 yards+" },
+        "iii": { numeral: "III", title: "The Duty Carbine", platform: "MK18-inspired Carbine", caliber: "5.56×45", mission: "Primary fighting rifle\nCQB / urban operations\nVehicle deployment\nRapid target transition", whySeries: "The Falcon III is the workhorse. Proven. Compact. Indestructible. This is the rifle you grab when everything goes sideways. Modeled after one of the most battle-tested carbines in modern Special Operations history.", buildDetails: "Effective Range: 0–300 yards" },
+        "iv": { numeral: "IV", title: "The Generalist", platform: "AR-15 (16\")", caliber: "5.56×45", mission: "General Purpose Rifle (GPR)\nMid-range dominance\nMulti-optic flexibility\nRural / mixed-terrain ops", whySeries: "Where the Duty Carbine excels up close, the Falcon IV owns the middle ground. With dual-optic capability, it transitions seamlessly from CQB to distance. This is the do-everything rifle every serious armory needs.", buildDetails: "Effective Range: 0–600 yards" },
+        "v": { numeral: "V", title: "The Shadow", platform: "AR-15", caliber: ".300 Blackout", mission: "Suppressed operations\nLow-signature engagements\nCQB with enhanced terminal effect\nNight operations", whySeries: "The Falcon V is built for discretion. Optimized for suppressed use, it delivers authority in close quarters while minimizing blast and signature. This is the rifle for working in the dark.", buildDetails: "Effective Range: 0–300 yards (mission-dependent)" },
+        "vi": { numeral: "VI", title: "The Sidearm", platform: "Duty Pistol (Full Kit)", caliber: "9×19mm", mission: "Secondary weapon system\nClose-contact defense\nWeapon transition under stress\nLast-line survivability", whySeries: "A rifle may fail. A pistol is always there. Falcon VI is built as a true fighting sidearm, fully equipped with battle belt integration. This is not a range gun — it’s a lifeline.", buildDetails: "Effective Range: 0–50 yards" },
+        "vii": { numeral: "VII", title: "The Precision Rifle", platform: "Precision Bolt Gun", caliber: "6mm GT or 6.5 PRC", mission: "Precision engagement\nLong-range reconnaissance support\nCounter-sniper overwatch\nFirst-round hit capability", whySeries: "When precision matters more than speed, Falcon VII steps forward. This rifle teaches patience, discipline, and mastery of external ballistics — a hallmark of elite marksmanship.", buildDetails: "Effective Range: 300–1,600 yards+" },
+        "viii": { numeral: "VIII", title: "The Breacher", platform: "Tactical Shotgun", caliber: "12 Gauge", mission: "Close-quarters dominance\nBreaching capability\nMaximum terminal effect\nIndoor / confined-space ops", whySeries: "No weapon delivers immediate authority like a shotgun in close quarters. Falcon VIII fills the shock-and-awe role in the armory — devastating, decisive, and purpose-built.", buildDetails: "Effective Range: 0–50 yards" },
+        "ix": { numeral: "IX", title: "The Sentinel", platform: "Defensive Pistol Setup", caliber: "9×19mm", mission: "Home defense\nLow-light engagements\nRapid target acquisition\nImmediate response weapon", whySeries: "The Falcon IX is the final layer of defense — the weapon closest at hand when seconds matter. Lights, optics, and setup prioritize speed, clarity, and control under stress.", buildDetails: "Effective Range: 0–25 yards" },
+        "x": { numeral: "X", title: "The Interceptor", platform: "Raider Chassis PDW (SIG P320–based)", caliber: "9×19mm", mission: "Personal Defense Weapon (PDW)\nVehicle-based response\nDiscreet carry in non-permissive environments\nRapid deployment from bag or vehicle\nClose-contact dominance beyond pistol capability", whySeries: "TBA", buildDetails: "TBA" },
     };
 
     const data = falconData[id.toLowerCase()];
@@ -71,21 +71,21 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
 
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-3">Mission</h3>
-                            <p className="text-lg text-zinc-700 leading-relaxed font-light">
+                            <p className="text-lg text-zinc-700 leading-relaxed font-light whitespace-pre-line">
                                 {data.mission}
                             </p>
                         </div>
 
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-3">Why it's in the series</h3>
-                            <p className="text-lg text-zinc-700 leading-relaxed font-light">
+                            <p className="text-lg text-zinc-700 leading-relaxed font-light whitespace-pre-line">
                                 {data.whySeries}
                             </p>
                         </div>
 
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-3">Build Details</h3>
-                            <p className="text-lg text-zinc-700 leading-relaxed font-light bg-zinc-50 p-6 rounded-lg border border-zinc-100">
+                            <p className="text-lg text-zinc-700 leading-relaxed font-light bg-zinc-50 p-6 rounded-lg border border-zinc-100 whitespace-pre-line">
                                 {data.buildDetails}
                             </p>
                         </div>
