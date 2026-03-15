@@ -40,7 +40,7 @@ export default function FalconSeriesPage() {
                         <Link href={`/falcon-series/${panel.id}`} key={panel.id} className="group cursor-pointer">
                             <div className="bg-zinc-50 border border-zinc-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1">
                                 <div className="p-8 pb-4 flex flex-col items-center text-center grow">
-                                    <div className="relative w-32 h-32 mb-6 group-hover:scale-105 transition-transform duration-300">
+                                    <div className="relative w-32 h-32 group-hover:scale-105 transition-transform duration-300">
                                         <Image
                                             src={`/assets/falcon/Falcon_${panel.numeral}_Logo.png`}
                                             alt={`Falcon ${panel.numeral}`}
@@ -48,9 +48,6 @@ export default function FalconSeriesPage() {
                                             className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
                                         />
                                     </div>
-                                    <h2 className="text-2xl font-bold font-serif uppercase text-zinc-900">
-                                        Falcon {panel.numeral}
-                                    </h2>
                                 </div>
                                 <div className="bg-zinc-100 items-center justify-center p-4 border-t border-zinc-200 text-sm font-bold uppercase tracking-widest text-zinc-500 group-hover:bg-zinc-900 group-hover:text-white transition-colors flex">
                                     View Intel
