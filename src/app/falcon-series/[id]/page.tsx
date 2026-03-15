@@ -46,7 +46,7 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
                     <div className="flex-1 w-full flex flex-col items-center justify-center bg-zinc-50 rounded-xl p-8 border border-zinc-100">
                         <div className="relative w-48 h-48 mb-6">
                             <Image
-                                src="/assets/Falcon_Fund_Logo.png"
+                                src={`/assets/falcon/Falcon_${data.numeral}_Logo.png`}
                                 alt={`Falcon ${data.numeral}`}
                                 fill
                                 className="object-contain"
