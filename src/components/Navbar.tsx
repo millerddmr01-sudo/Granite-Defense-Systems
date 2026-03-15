@@ -4,8 +4,16 @@ import NavMenu from "./NavMenu";
 import CartButton from "./CartButton";
 
 export default async function Navbar() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    let user = null;
+    try {
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+            const supabase = await createClient();
+            const { data } = await supabase.auth.getUser();
+            user = data.user;
+        }
+    } catch {
+        // Supabase not configured, treat as logged out
+    }
 
     return (
         <nav className="w-full h-20 border-b border-black bg-primary text-primary-foreground flex items-center justify-between px-6 sticky top-0 z-50 shadow-md">
