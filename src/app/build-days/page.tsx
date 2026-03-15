@@ -11,6 +11,10 @@ export default function BuildDaysPage() {
 
     const buildClasses = [
         {
+            title: "The Falcon Series",
+            description: "Built, Not Bought.\nThe Falcon Series is not a collection of firearms.\nIt is a disciplined progression—a modern fighting armory assembled with intent, purpose, and mastery.\nEach Falcon is designed around a specific mission role.\nEach build teaches a different skill set.\nTogether, they form a complete and capable system."
+        },
+        {
             title: "Custom 10/22 Build Day",
             description: "Bring your stock 10/22 semi-automatic .22 LR rifle—or buy one and build a customized, general-purpose setup for plinking, target shooting, and small-game hunting. Configure it with an integral or direct-thread suppressor to keep things quiet, and add a night-vision or thermal optic to take this long-standing .22 LR semi-auto standard to a whole new level.",
             image: "/assets/build-days/10-22.jpg"
@@ -77,18 +81,20 @@ export default function BuildDaysPage() {
                     <div key={idx} className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-8 hover:shadow-lg transition-shadow flex flex-col">
                         <div className="flex-grow">
                             <h2 className="text-2xl font-black uppercase tracking-tight mb-4">{cls.title}</h2>
-                            <p className="text-secondary leading-relaxed mb-6">
+                            <p className="text-secondary leading-relaxed mb-6 whitespace-pre-line">
                                 {cls.description}
                             </p>
                         </div>
-                        <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex justify-center">
-                            <button
-                                onClick={() => setSelectedImage({ src: cls.image, alt: cls.title })}
-                                className="inline-flex items-center gap-2 px-6 py-2 border-2 border-foreground text-foreground font-bold uppercase tracking-wide hover:bg-foreground hover:text-background transition-colors rounded-sm"
-                            >
-                                View Build Example
-                            </button>
-                        </div>
+                        {cls.image && (
+                            <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex justify-center">
+                                <button
+                                    onClick={() => setSelectedImage({ src: cls.image as string, alt: cls.title })}
+                                    className="inline-flex items-center gap-2 px-6 py-2 border-2 border-foreground text-foreground font-bold uppercase tracking-wide hover:bg-foreground hover:text-background transition-colors rounded-sm"
+                                >
+                                    View Build Example
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
