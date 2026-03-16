@@ -4,30 +4,32 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 async function getPreviewItem(category: string) {
-    const supabase = await createClient();
-    const { data } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", category)
-        .limit(1)
-        .maybeSingle();
-    return data;
+    try {
+        const supabase = await createClient();
+        const { data } = await supabase
+            .from("products")
+            .select("*")
+            .eq("category", category)
+            .limit(1)
+            .maybeSingle();
+        return data;
+    } catch {
+        return null;
+    }
 }
 
 export default async function InventoryPreviewPage() {
-    const rifle = await getPreviewItem("rifle");
-    const pistol = await getPreviewItem("pistol");
+    let rifle = null, pistol = null, nfa = null;
 
-    // Try fetching 'nfa' category. Also try 'silencer' if 'nfa' is empty, just in case.
-    let nfa = await getPreviewItem("nfa");
-    if (!nfa) {
-        const { data: silencer } = await (await createClient())
-            .from("products")
-            .select("*")
-            .eq("category", "silencer")
-            .limit(1)
-            .maybeSingle();
-        nfa = silencer;
+    try {
+        rifle = await getPreviewItem("rifle");
+        pistol = await getPreviewItem("pistol");
+        nfa = await getPreviewItem("nfa");
+        if (!nfa) {
+            nfa = await getPreviewItem("silencer");
+        }
+    } catch {
+        // Supabase unavailable — render empty state
     }
 
     const items = [
