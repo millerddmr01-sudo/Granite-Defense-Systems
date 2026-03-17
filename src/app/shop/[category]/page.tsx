@@ -149,8 +149,61 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                     </div>
                 )}
 
-                {/* Inventory Header (for Optics) */}
-                {category === 'optics' && (
+                {category === 'rifles' && (
+                    <div className="mb-16">
+                        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                            {/* Hunting Section */}
+                            <div className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-8 flex flex-col items-center text-center">
+                                <h2 className="text-3xl font-black uppercase tracking-tight mb-4 text-primary">Hunting</h2>
+                                <p className="text-secondary mb-8 text-sm leading-relaxed max-w-sm">
+                                    While we have access to just about every major brand, we recommend the following Hunting Specific Brands:
+                                </p>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 items-center justify-items-center w-full mt-auto">
+                                    {[
+                                        { name: 'Bergara', img: '/assets/logos/bergara.png' },
+                                        { name: 'Browning', img: '/logos/browning.png' }, // from known knives logos
+                                        { name: 'Christensen Arms', img: '/assets/logos/christensen_arms.png' },
+                                        { name: 'Remington', img: '/assets/logos/remington.png' },
+                                        { name: 'Ruger', img: '/assets/logos/ruger.png' },
+                                        { name: 'Savage Arms', img: '/assets/logos/savage_arms.png' },
+                                        { name: 'Weatherby', img: '/assets/logos/weatherby.png' },
+                                    ].map((brand) => (
+                                        <div key={brand.name} className="relative aspect-[3/2] w-full max-w-[120px] opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all">
+                                            <Image src={brand.img} alt={brand.name} fill className="object-contain" />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Tactical Section */}
+                            <div className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-8 flex flex-col items-center text-center">
+                                <h2 className="text-3xl font-black uppercase tracking-tight mb-4 text-primary">Tactical</h2>
+                                <p className="text-secondary mb-8 text-sm leading-relaxed max-w-sm">
+                                    When it comes to Tactical Rifles, we recommend the following brands:
+                                </p>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 items-center justify-items-center w-full mt-auto">
+                                    {[
+                                        { name: 'Granite Defense Systems', img: '/assets/logos/granite_defense.png' },
+                                        { name: 'Barrett', img: '/assets/logos/barrett.png' },
+                                        { name: 'Daniel Defense', img: '/assets/logos/daniel_defense.png' },
+                                        { name: 'Geissele', img: '/images/partners/Geissele_Logo.png' }, // From partners 
+                                        { name: 'HK', img: '/assets/logos/hk.png' },
+                                        { name: 'Sig Sauer', img: '/assets/reseller/SigSauer.png' }, // From reseller
+                                        { name: 'Rock River Arms', img: '/assets/logos/rock_river_arms.png' },
+                                        { name: 'Quentin Defense', img: '/images/partners/Quentin_Defense.png' }, // From partners
+                                    ].map((brand) => (
+                                        <div key={brand.name} className="relative aspect-[3/2] w-full max-w-[120px] opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all">
+                                            <Image src={brand.img} alt={brand.name} fill className="object-contain" />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Inventory Header (for special categories) */}
+                {(category === 'optics' || category === 'rifles') && (
                     <div className="mb-8 border-b border-border pb-4">
                         <h2 className="text-3xl font-black uppercase tracking-tight">Inventory</h2>
                     </div>
