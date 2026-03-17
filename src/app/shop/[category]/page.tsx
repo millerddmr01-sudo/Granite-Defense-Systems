@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 import { Database } from "@/types/database.types";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -39,20 +39,28 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         return notFound();
     }
 
-    const supabase = createClient();
+    let products: Product[] | null = null;
 
-    // Build query
-    let query = supabase
-        .from('products')
-        .select('*')
-        .eq('status', 'active')
-        .eq('category', dbCategory);
+    try {
+        const supabase = await createClient();
 
-    if (conditionFilter) {
-        query = query.eq('condition', conditionFilter); // Requires 'condition' column in DB to be populated!
+        // Build query
+        let query = supabase
+            .from('products')
+            .select('*')
+            .eq('status', 'active')
+            .eq('category', dbCategory);
+
+        if (conditionFilter) {
+            query = query.eq('condition', conditionFilter); // Requires 'condition' column in DB to be populated!
+        }
+
+        const { data } = await query.order('created_at', { ascending: false });
+        products = data;
+    } catch {
+        // Supabase error, render empty list
+        products = [];
     }
-
-    const { data: products } = await query.order('created_at', { ascending: false });
 
     const titleMap: Record<string, string> = {
         'rifles': 'Rifles',
