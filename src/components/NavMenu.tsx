@@ -10,6 +10,7 @@ export default function NavMenu() {
     const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
 
     const productCategories = [
+        { name: 'All Inventory', href: '/shop' },
         { name: 'Rifles', href: '/shop/rifles' },
         { name: 'Pistols', href: '/shop/pistols' },
         { name: 'Shotguns', href: '/shop/shotguns' },
