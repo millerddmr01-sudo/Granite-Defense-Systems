@@ -20,6 +20,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Granite Defense Systems",
   description: "Premium Firearms, Parts, and Tactical Gear.",
+  icons: {
+    icon: "/granite-logo.png",
+    apple: "/granite-logo.png",
+  },
 };
 
 export default function RootLayout({
