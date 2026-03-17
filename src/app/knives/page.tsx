@@ -108,7 +108,7 @@ export default function KnivesPage() {
                                     <img
                                         src={brand.logo}
                                         alt={brand.name}
-                                        className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                                        className={`w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 ${brand.name === 'Hogue' ? 'dark:invert' : ''}`}
                                     />
                                 </div>
                             ) : (
