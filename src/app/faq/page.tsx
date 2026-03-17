@@ -2,7 +2,7 @@ export default function FAQPage() {
     const faqs = [
         {
             question: "How do I purchase a suppressor?",
-            answer: "Purchasing a suppressor requires buying the item, purchasing a tax stamp ($200), and submitting fingerprints and photos to the ATF. We can guide you through the entire process, including the Form 4 submission."
+            answer: "Purchasing a suppressor requires buying the item, and submitting fingerprints and photos to the ATF. We can guide you through the entire process, including the Form 4 submission."
         },
         {
             question: "What is your return policy?",
