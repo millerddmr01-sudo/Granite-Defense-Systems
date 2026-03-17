@@ -43,7 +43,7 @@ export default function PartnersPage() {
                                     src={partner.logo}
                                     alt={`${partner.name} Logo`}
                                     fill
-                                    className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                                    className={`object-contain grayscale group-hover:grayscale-0 transition-all duration-300 ${partner.name === 'Hogue' ? 'dark:invert' : ''}`}
                                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                                 />
                             </div>
