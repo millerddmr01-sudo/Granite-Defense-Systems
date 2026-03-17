@@ -153,47 +153,47 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                     <div className="mb-16">
                         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
                             {/* Hunting Section */}
-                            <div className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-8 flex flex-col items-center text-center">
+                            <div className="bg-white border border-zinc-200 rounded-lg p-8 flex flex-col items-center text-center">
                                 <h2 className="text-3xl font-black uppercase tracking-tight mb-4 text-primary">Hunting</h2>
-                                <p className="text-secondary mb-8 text-sm leading-relaxed max-w-sm">
+                                <p className="text-zinc-600 mb-8 text-sm leading-relaxed max-w-sm">
                                     While we have access to just about every major brand, we recommend the following Hunting Specific Brands:
                                 </p>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 items-center justify-items-center w-full mt-auto">
                                     {[
                                         { name: 'Bergara', img: '/logos/bergara.png' },
-                                        { name: 'Browning', img: '/logos/browning.png', darkInvert: true }, 
-                                        { name: 'Christensen Arms', img: '/logos/Christensen Arms Logo.png', darkInvert: true },
+                                        { name: 'Browning', img: '/logos/browning.png' }, 
+                                        { name: 'Christensen Arms', img: '/logos/Christensen Arms Logo.png' },
                                         { name: 'Remington', img: '/logos/remington.png' },
                                         { name: 'Ruger', img: '/logos/ruger.png' },
                                         { name: 'Savage Arms', img: '/logos/savage arms.png' },
                                         { name: 'Weatherby', img: '/logos/weatherby.png' },
                                     ].map((brand) => (
                                         <div key={brand.name} className="relative aspect-[3/2] w-full max-w-[120px] opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all">
-                                            <Image src={brand.img} alt={brand.name} fill className={`object-contain ${brand.darkInvert ? 'dark:invert' : ''}`} />
+                                            <Image src={brand.img} alt={brand.name} fill className="object-contain" />
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
                             {/* Tactical Section */}
-                            <div className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-8 flex flex-col items-center text-center">
+                            <div className="bg-white border border-zinc-200 rounded-lg p-8 flex flex-col items-center text-center">
                                 <h2 className="text-3xl font-black uppercase tracking-tight mb-4 text-primary">Tactical</h2>
-                                <p className="text-secondary mb-8 text-sm leading-relaxed max-w-sm">
+                                <p className="text-zinc-600 mb-8 text-sm leading-relaxed max-w-sm">
                                     When it comes to Tactical Rifles, we recommend the following brands:
                                 </p>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 items-center justify-items-center w-full mt-auto">
                                     {[
                                         { name: 'Granite Defense Systems', img: '/granite-logo.png' },
                                         { name: 'Barrett', img: '/logos/Barrett Firearms logo.png' },
-                                        { name: 'Daniel Defense', img: '/logos/Daniel Defense Logo.png', darkInvert: true },
-                                        { name: 'Geissele', img: '/logos/Geissele_Logo.png', darkInvert: true },
+                                        { name: 'Daniel Defense', img: '/logos/Daniel Defense Logo.png' },
+                                        { name: 'Geissele', img: '/logos/Geissele_Logo.png' },
                                         { name: 'HK', img: '/logos/HK Logo.png' },
-                                        { name: 'Sig Sauer', img: '/logos/sig sauer.png', darkInvert: true },
-                                        { name: 'Rock River Arms', img: '/logos/RRA Logo black.png', darkInvert: true },
+                                        { name: 'Sig Sauer', img: '/logos/sig sauer.png' },
+                                        { name: 'Rock River Arms', img: '/logos/RRA Logo black.png' },
                                         { name: 'Quentin Defense', img: '/logos/Quentin_Defense.png' },
                                     ].map((brand) => (
                                         <div key={brand.name} className="relative aspect-[3/2] w-full max-w-[120px] opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all">
-                                            <Image src={brand.img} alt={brand.name} fill className={`object-contain ${brand.darkInvert ? 'dark:invert' : ''}`} />
+                                            <Image src={brand.img} alt={brand.name} fill className="object-contain" />
                                         </div>
                                     ))}
                                 </div>
