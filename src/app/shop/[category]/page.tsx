@@ -160,16 +160,16 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                                 </p>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 items-center justify-items-center w-full mt-auto">
                                     {[
-                                        { name: 'Bergara', img: '/assets/logos/bergara.png' },
-                                        { name: 'Browning', img: '/logos/browning.png' }, // from known knives logos
-                                        { name: 'Christensen Arms', img: '/assets/logos/christensen_arms.png' },
-                                        { name: 'Remington', img: '/assets/logos/remington.png' },
-                                        { name: 'Ruger', img: '/assets/logos/ruger.png' },
-                                        { name: 'Savage Arms', img: '/assets/logos/savage_arms.png' },
-                                        { name: 'Weatherby', img: '/assets/logos/weatherby.png' },
+                                        { name: 'Bergara', img: '/logos/bergara.png' },
+                                        { name: 'Browning', img: '/logos/browning.png', darkInvert: true }, 
+                                        { name: 'Christensen Arms', img: '/logos/Christensen Arms Logo.png', darkInvert: true },
+                                        { name: 'Remington', img: '/logos/remington.png' },
+                                        { name: 'Ruger', img: '/logos/ruger.png' },
+                                        { name: 'Savage Arms', img: '/logos/savage arms.png' },
+                                        { name: 'Weatherby', img: '/logos/weatherby.png' },
                                     ].map((brand) => (
                                         <div key={brand.name} className="relative aspect-[3/2] w-full max-w-[120px] opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all">
-                                            <Image src={brand.img} alt={brand.name} fill className="object-contain" />
+                                            <Image src={brand.img} alt={brand.name} fill className={`object-contain ${brand.darkInvert ? 'dark:invert' : ''}`} />
                                         </div>
                                     ))}
                                 </div>
@@ -183,17 +183,17 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                                 </p>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 items-center justify-items-center w-full mt-auto">
                                     {[
-                                        { name: 'Granite Defense Systems', img: '/assets/logos/granite_defense.png' },
-                                        { name: 'Barrett', img: '/assets/logos/barrett.png' },
-                                        { name: 'Daniel Defense', img: '/assets/logos/daniel_defense.png' },
-                                        { name: 'Geissele', img: '/images/partners/Geissele_Logo.png' }, // From partners 
-                                        { name: 'HK', img: '/assets/logos/hk.png' },
-                                        { name: 'Sig Sauer', img: '/assets/reseller/SigSauer.png' }, // From reseller
-                                        { name: 'Rock River Arms', img: '/assets/logos/rock_river_arms.png' },
-                                        { name: 'Quentin Defense', img: '/images/partners/Quentin_Defense.png' }, // From partners
+                                        { name: 'Granite Defense Systems', img: '/granite-logo.png' },
+                                        { name: 'Barrett', img: '/logos/Barrett Firearms logo.png' },
+                                        { name: 'Daniel Defense', img: '/logos/Daniel Defense Logo.png', darkInvert: true },
+                                        { name: 'Geissele', img: '/logos/Geissele_Logo.png', darkInvert: true },
+                                        { name: 'HK', img: '/logos/HK Logo.png' },
+                                        { name: 'Sig Sauer', img: '/logos/sig sauer.png', darkInvert: true },
+                                        { name: 'Rock River Arms', img: '/logos/RRA Logo black.png', darkInvert: true },
+                                        { name: 'Quentin Defense', img: '/logos/Quentin_Defense.png' },
                                     ].map((brand) => (
                                         <div key={brand.name} className="relative aspect-[3/2] w-full max-w-[120px] opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all">
-                                            <Image src={brand.img} alt={brand.name} fill className="object-contain" />
+                                            <Image src={brand.img} alt={brand.name} fill className={`object-contain ${brand.darkInvert ? 'dark:invert' : ''}`} />
                                         </div>
                                     ))}
                                 </div>
