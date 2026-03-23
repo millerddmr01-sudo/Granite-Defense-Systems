@@ -3,14 +3,15 @@ import Image from "next/image";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import BuildOptions from "./BuildOptions";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Adding Next.js 15+ correct handling of params as a Promise
 export default async function FalconDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
 
-    const falconData: Record<string, { numeral: string, title: string, platform: string, caliber: string, mission: string, whySeries: string, buildDetails: string, options?: any, specDetails?: string }> = {
-        "i": { numeral: "I", title: "The Threshold", platform: "AR-9", caliber: "9×19mm", mission: "- CQB fundamentals\n- Repetition & muscle memory\n- High-volume drills\n- Cost-efficient sustainment training", specDetails: "Trigger - Rise Armament PCC-140\nOptic - Holosun HSS510C-GR\nSilencer - Kinetic Supressors - Wizard Ti9mm", whySeries: "The Falcon I is the entry weapon to the Falcon Series. It allows operators to train AR manual-of-arms at high tempo without the cost or wear of rifle calibers. Same controls. Same feel. Maximum reps. Every serious armory starts with a trainer.\n\nEffective Range: 0–100 yards (optimized for CQB)", buildDetails: "Build Package - $2,943.00" },
-        "ii": { numeral: "II", title: "The Reach", platform: "AR-10", caliber: "6.5 Creedmoor", mission: "- Long-range interdiction\n- Precision overwatch\n- Counter-sniper capability\n- Open-terrain dominance", specDetails: "Optic - Leupold Mark V - VH-5HD 3-15x56mm\nTrigger - Rise Arrmament 434 Performance\nGas Block - Adjustable\nStock - Magpul PRS Gen 3\nCase - Custom Cut GDS-Foam/Pelican V800", whySeries: "No modern fighting armory is complete without true standoff capability. The Falcon II extends the Falcon operator’s reach well beyond standard infantry distance, delivering precision, ballistic efficiency, and authority at range.\n\nEffective Range: 100–1,000 yards+", buildDetails: "Build Package - $3,490.00" },
+    const falconData: Record<string, { numeral: string, title: string, platform: string, caliber: string, mission: string, whySeries: string, buildDetails: string, options?: any, specDetails?: string, productImage?: string }> = {
+        "i": { numeral: "I", title: "The Threshold", platform: "AR-9", caliber: "9×19mm", mission: "- CQB fundamentals\n- Repetition & muscle memory\n- High-volume drills\n- Cost-efficient sustainment training", specDetails: "Trigger - Rise Armament PCC-140\nOptic - Holosun HSS510C-GR\nSilencer - Kinetic Supressors - Wizard Ti9mm", whySeries: "The Falcon I is the entry weapon to the Falcon Series. It allows operators to train AR manual-of-arms at high tempo without the cost or wear of rifle calibers. Same controls. Same feel. Maximum reps. Every serious armory starts with a trainer.\n\nEffective Range: 0–100 yards (optimized for CQB)", buildDetails: "Build Package - $2,943.00", productImage: "/assets/falcon/falcon I.png" },
+        "ii": { numeral: "II", title: "The Reach", platform: "AR-10", caliber: "6.5 Creedmoor", mission: "- Long-range interdiction\n- Precision overwatch\n- Counter-sniper capability\n- Open-terrain dominance", specDetails: "Optic - Leupold Mark V - VH-5HD 3-15x56mm\nTrigger - Rise Arrmament 434 Performance\nGas Block - Adjustable\nStock - Magpul PRS Gen 3\nCase - Custom Cut GDS-Foam/Pelican V800", whySeries: "No modern fighting armory is complete without true standoff capability. The Falcon II extends the Falcon operator’s reach well beyond standard infantry distance, delivering precision, ballistic efficiency, and authority at range.\n\nEffective Range: 100–1,000 yards+", buildDetails: "Build Package - $3,490.00", productImage: "/assets/falcon/falcon II.png" },
         "iii": { 
             numeral: "III", 
             title: "The Duty Carbine", 
@@ -21,9 +22,15 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
             whySeries: "The Falcon III is the workhorse. Proven. Compact. Indestructible. This is the rifle you grab when everything goes sideways. Modeled after one of the most battle-tested carbines in modern Special Operations history.\n\nEffective Range: 0–300 yards", 
             buildDetails: "",
             options: {
+                basePrice: 2465,
+                optics: [
+                    { label: "None", value: "none", price: 0 },
+                    { label: "+ $510.00 w/ Holosun ARO/EVO w/ 3x Magnifier", value: "holosun_aro_evo", price: 510 },
+                    { label: "+ $1025.00 w/ Trijicon MRO SD w/ 3x Magnifier", value: "trijicon_mro_sd", price: 1025 }
+                ],
                 silencer: [
-                    { label: "$2,975 w/o silencer", value: "none", price: 2975 },
-                    { label: "$3,925 w/ Huxwrx Ventum 762 (includes HUB Mount)", value: "huxwrx_ventum_762", price: 3925 }
+                    { label: "None", value: "none", price: 0 },
+                    { label: "+ $950.00 w/ Huxwrx Ventum 762 (includes HUB Mount)", value: "huxwrx_ventum_762", price: 950 }
                 ],
                 components: [
                     { name: "Handguard", choices: ["Black", "FDE"] },
@@ -76,6 +83,9 @@ export default async function FalconDetail({ params }: { params: Promise<{ id: s
                         <h1 className="text-3xl font-black font-serif text-zinc-900 tracking-tighter uppercase text-center mt-2 border-t border-zinc-200 pt-6 w-full">
                             {data.title}
                         </h1>
+                        {data.productImage && (
+                            <ZoomableImage src={data.productImage} alt={`${data.title} Product`} />
+                        )}
                     </div>
 
                     <div className="flex-[2] w-full space-y-8">
