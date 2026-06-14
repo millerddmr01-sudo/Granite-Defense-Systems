@@ -32,6 +32,11 @@ export async function createOrder({ items, customer, total }: CreateOrderParams)
         // but for now we'll trust the items passed, just checking stock.
 
         for (const item of items) {
+            // Bypass stock check for custom builds
+            if (item.id.startsWith('build-')) {
+                continue;
+            }
+
             const { data: product } = await supabase
                 .from('products')
                 .select('stock_quantity')
@@ -70,6 +75,8 @@ export async function createOrder({ items, customer, total }: CreateOrderParams)
 
         // 3. Update Stock
         for (const item of items) {
+            if (item.id.startsWith('build-')) continue;
+
             const { error: stockError } = await supabase.rpc('decrement_stock', {
                 row_id: item.id,
                 quantity: item.quantity

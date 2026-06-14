@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useCart } from "@/context/CartContext";
 
 type ComponentOption = {
     name: string;
@@ -28,6 +29,7 @@ type OptionsProps = {
 };
 
 export default function BuildOptions({ options, modelName }: { options: OptionsProps, modelName: string }) {
+    const { addItem } = useCart();
     const [silencer, setSilencer] = useState(options.silencer?.[0]?.value || "");
     const [optic, setOptic] = useState(options.optics?.[0]?.value || "");
     
@@ -54,6 +56,33 @@ export default function BuildOptions({ options, modelName }: { options: OptionsP
         ...(optic && { optic }),
         ...selections
     });
+
+    const handleAddToCart = () => {
+        addItem({
+            id: `build-${Date.now()}`,
+            title: modelName,
+            price: selectedPrice,
+            stock_quantity: 1, // Custom builds always have "1" stock since it's built to order
+            description: `Custom Build Options:\n${[
+                silencer && `Silencer: ${options.silencer?.find(s => s.value === silencer)?.label}`,
+                optic && `Optic: ${options.optics?.find(o => o.value === optic)?.label}`,
+                ...Object.entries(selections).map(([k, v]) => `${k}: ${v}`)
+            ].filter(Boolean).join('\n')}`,
+            category: 'rifle',
+            status: 'active',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            images: [],
+            compare_at_price: null,
+            condition: 'new',
+            manufacturer: 'Granite Defense Systems',
+            model: modelName,
+            upc: null,
+            mpn: null,
+            slug: null,
+            caliber: null,
+        } as any, 1);
+    };
 
     return (
         <div className="bg-zinc-50 p-8 rounded-lg border border-zinc-200 shadow-sm mt-4">
@@ -150,12 +179,12 @@ export default function BuildOptions({ options, modelName }: { options: OptionsP
                         ${selectedPrice.toLocaleString()}
                     </div>
                 </div>
-                <Link 
-                    href={`/contact?${inquiryParams.toString()}`} 
+                <button 
+                    onClick={handleAddToCart}
                     className="inline-block bg-zinc-900 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg w-full sm:w-auto text-center"
                 >
                     Add to Cart
-                </Link>
+                </button>
             </div>
         </div>
     );
