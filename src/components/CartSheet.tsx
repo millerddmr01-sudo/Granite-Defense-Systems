@@ -73,6 +73,11 @@ export default function CartSheet() {
                                         <h3 className="font-bold text-sm line-clamp-2 leading-tight mb-1">
                                             {item.title}
                                         </h3>
+                                        {item.description && item.description.startsWith('Custom Build Options:') && (
+                                            <div className="text-[11px] text-secondary whitespace-pre-wrap leading-tight mb-2 bg-zinc-200 dark:bg-zinc-800 p-2 rounded">
+                                                {item.description}
+                                            </div>
+                                        )}
                                         <p className="text-xs text-secondary font-mono">
                                             UPC: {item.upc || 'N/A'}
                                         </p>

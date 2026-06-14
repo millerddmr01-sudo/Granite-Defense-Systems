@@ -344,6 +344,11 @@ function CheckoutPage({ paymentIntentId, onSuccess }: { paymentIntentId: string 
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="font-bold text-sm line-clamp-2">{item.title}</h3>
+                                    {item.description && item.description.startsWith('Custom Build Options:') && (
+                                        <div className="text-[11px] text-secondary whitespace-pre-wrap leading-tight mt-1 bg-zinc-50 dark:bg-zinc-900 p-2 rounded border border-zinc-200 dark:border-zinc-800">
+                                            {item.description}
+                                        </div>
+                                    )}
                                     <div className="flex justify-between text-sm text-secondary mt-1">
                                         <span>Qty: {item.quantity}</span>
                                         <span className="font-bold text-foreground">${(item.price * item.quantity).toFixed(2)}</span>
